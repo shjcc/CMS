@@ -18,3 +18,8 @@ now run the frontend by entering: " npm run dev "
 once it loads you can click on the link by pressing CONTROL + left lick on the localhost link, any changes made will display on the website as long as it is live
 
 to close the server enter: CONTROL + C
+
+
+to run the server its the same but after navigating to /backend, run the server with: " node server.js "
+
+to close server, again enter: CONTROL + C
