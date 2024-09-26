@@ -1,104 +1,81 @@
 import React, { useState } from 'react';
 
-// Define recipes for products
 const recipes = {
     cake: { flour: 500, eggs: 2 }, // 1 cake = 500g flour, 2 eggs
-    sandwich: { bread: 2, cheese: 1 } // 1 sandwich = 2 slices of bread, 1 slice of cheese
+    sandwich: { bread: 2, ham: 50, cheese: 20 }, // 1 sandwich = 2 slices of bread, 50g ham, 20g cheese
 };
 
 const ProductionManagement = () => {
-    const [product, setProduct] = useState('');
-    const [quantity, setQuantity] = useState(0);
-    const [schedule, setSchedule] = useState('');
-    const [tasks, setTasks] = useState([]);
+    const [task, setTask] = useState({ product: 'cake', quantity: 1, date: '', time: '' });
     const [ingredients, setIngredients] = useState({});
 
-    // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        if (!product || quantity <= 0 || !schedule) {
-            alert('Please fill out all fields.');
-            return;
-        }
-
-        // Calculate the required ingredients based on the product and quantity
-        const requiredIngredients = calculateIngredients(product, quantity);
-
-        // Add the new task to the tasks array
-        const newTask = { product, quantity, schedule, ingredients: requiredIngredients };
-        setTasks([...tasks, newTask]);
-
-        // Reset form fields
-        setProduct('');
-        setQuantity(0);
-        setSchedule('');
-        setIngredients(requiredIngredients);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setTask({ ...task, [name]: value });
     };
 
-    // Function to calculate required ingredients
-    const calculateIngredients = (product, quantity) => {
-        const recipe = recipes[product];
-        const required = {};
-        if (recipe) {
-            for (const ingredient in recipe) {
-                required[ingredient] = recipe[ingredient] * quantity;
-            }
+    const calculateIngredients = () => {
+        const selectedRecipe = recipes[task.product];
+        const quantity = parseInt(task.quantity, 10);
+        const calculatedIngredients = {};
+
+        for (let ingredient in selectedRecipe) {
+            calculatedIngredients[ingredient] = selectedRecipe[ingredient] * quantity;
         }
-        return required;
+
+        setIngredients(calculatedIngredients);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        calculateIngredients();
+        // Additional logic for submitting the task can be added here.
     };
 
     return (
         <div>
-            <h1>Production Management</h1>
-            
-            {/* Production Task Form */}
+            <h2>Production Management</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Product:</label>
-                    <select value={product} onChange={(e) => setProduct(e.target.value)}>
-                        <option value="">Select Product</option>
+                    <select name="product" value={task.product} onChange={handleInputChange}>
                         <option value="cake">Cake</option>
                         <option value="sandwich">Sandwich</option>
                     </select>
                 </div>
-
                 <div>
                     <label>Quantity:</label>
                     <input
                         type="number"
-                        value={quantity}
-                        onChange={(e) => setQuantity(parseInt(e.target.value))}
+                        name="quantity"
+                        value={task.quantity}
+                        onChange={handleInputChange}
                         min="1"
                     />
                 </div>
-
                 <div>
-                    <label>Schedule Date & Time:</label>
-                    <input
-                        type="datetime-local"
-                        value={schedule}
-                        onChange={(e) => setSchedule(e.target.value)}
-                    />
+                    <label>Date:</label>
+                    <input type="date" name="date" value={task.date} onChange={handleInputChange} />
                 </div>
-
-                <button type="submit">Add Task</button>
+                <div>
+                    <label>Time:</label>
+                    <input type="time" name="time" value={task.time} onChange={handleInputChange} />
+                </div>
+                <button type="submit">Schedule Production</button>
             </form>
 
-            {/* Display Scheduled Tasks */}
-            <h2>Scheduled Production Tasks</h2>
-            <ul>
-                {tasks.map((task, index) => (
-                    <li key={index}>
-                        {task.quantity} {task.product}(s) scheduled for {new Date(task.schedule).toLocaleString()}
-                        <ul>
-                            {Object.keys(task.ingredients).map((ingredient, i) => (
-                                <li key={i}>{task.ingredients[ingredient]}g of {ingredient}</li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
+            {Object.keys(ingredients).length > 0 && (
+                <div>
+                    <h3>Required Ingredients for {task.quantity} {task.product}(s):</h3>
+                    <ul>
+                        {Object.entries(ingredients).map(([ingredient, amount]) => (
+                            <li key={ingredient}>
+                                {ingredient}: {amount}g
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
     );
 };
