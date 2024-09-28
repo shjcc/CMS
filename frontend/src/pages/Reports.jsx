@@ -8,12 +8,37 @@ const Reports = () => {
         orderStatus: '',
     });
 
+    // Demo data for reports
+    const demoReports = [
+        {
+            id: 1,
+            productName: 'Product A',
+            salesAmount: 1500,
+            customerName: 'John Doe',
+            status: 'completed',
+        },
+        {
+            id: 2,
+            productName: 'Product B',
+            salesAmount: 2000,
+            customerName: 'Jane Smith',
+            status: 'pending',
+        },
+        {
+            id: 3,
+            productName: 'Product C',
+            salesAmount: 1000,
+            customerName: 'Alice Johnson',
+            status: 'completed',
+        },
+    ];
+
     // Fetch reports based on filters
     const fetchReports = async () => {
         const query = new URLSearchParams(filters).toString();
         const response = await fetch(`http://localhost:5000/api/reports?${query}`);
         const data = await response.json();
-        setReports(data);
+        setReports(data.length > 0 ? data : demoReports); // Use demo data if no data from API
     };
 
     // Handle filter change
@@ -78,7 +103,7 @@ const Reports = () => {
                         {reports.map((report) => (
                             <li key={report.id}>
                                 <h3>{report.productName}</h3>
-                                <p>Sales: {report.salesAmount}</p>
+                                <p>Sales: ${report.salesAmount}</p>
                                 <p>Customer: {report.customerName}</p>
                                 <p>Status: {report.status}</p>
                             </li>
