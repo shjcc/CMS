@@ -4,16 +4,16 @@ const ReportsData = [
         productName: 'Product A',
         salesAmount: 1500,
         customerName: 'John Doe',
-        customerType: 'new',
-        orderStatus: 'pending',
-        dateRange: 'daily',
+        customerType: 'new', // Make sure this matches the filter value
+        orderStatus: 'pending', // Make sure this matches the filter value
+        dateRange: 'daily', // Make sure this matches the filter value
     },
     {
         id: 2,
         productName: 'Product B',
         salesAmount: 2000,
         customerName: 'Jane Smith',
-        customerType: 'returning',
+        customerType: 'returning', // Ensure consistency
         orderStatus: 'completed',
         dateRange: 'weekly',
     },
@@ -25,8 +25,7 @@ const ReportsData = [
         customerType: 'new',
         orderStatus: 'completed',
         dateRange: 'monthly',
-    },
-    // Add more data as needed
+    }
 ];
 
 export default ReportsData;
