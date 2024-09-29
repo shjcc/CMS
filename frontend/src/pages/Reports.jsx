@@ -1,34 +1,36 @@
-import React from 'react';
-// Generate daily, weekly, or monthly sales reports (total sales, sales by product, sales by customer).
-// Include filtering options (date range, customer type, order status).
 import React, { useState, useEffect } from 'react';
+import ReportsData from '../components/ReportsData.jsx'; // Import the report data
 
 const Reports = () => {
-    return <div>Reports</div>;
     const [reports, setReports] = useState([]);
     const [filters, setFilters] = useState({
         dateRange: '',
         customerType: '',
         orderStatus: '',
     });
-    // Fetch reports based on filters
+
+    // Use the demo data from ReportsData.jsx when no API data is available
     const fetchReports = async () => {
         const query = new URLSearchParams(filters).toString();
         const response = await fetch(`http://localhost:5000/api/reports?${query}`);
         const data = await response.json();
-        setReports(data);
+        setReports(data.length > 0 ? data : ReportsData); // Use ReportsData if API returns no data
     };
+
     // Handle filter change
     const handleFilterChange = (filterName, filterValue) => {
         setFilters({ ...filters, [filterName]: filterValue });
     };
+
     // Fetch reports when filters change
     useEffect(() => {
         fetchReports();
     }, [filters]);
+
     return (
         <div>
             <h1>Sales Reports</h1>
+
             {/* Filter Form */}
             <form>
                 <div>
@@ -43,6 +45,7 @@ const Reports = () => {
                         <option value="monthly">Monthly</option>
                     </select>
                 </div>
+
                 <div>
                     <label>Customer Type:</label>
                     <select
@@ -54,6 +57,7 @@ const Reports = () => {
                         <option value="returning">Returning</option>
                     </select>
                 </div>
+
                 <div>
                     <label>Order Status:</label>
                     <select
@@ -66,6 +70,7 @@ const Reports = () => {
                     </select>
                 </div>
             </form>
+
             {/* Display Reports */}
             <div>
                 <h2>Report Results</h2>
@@ -74,7 +79,7 @@ const Reports = () => {
                         {reports.map((report) => (
                             <li key={report.id}>
                                 <h3>{report.productName}</h3>
-                                <p>Sales: {report.salesAmount}</p>
+                                <p>Sales: ${report.salesAmount}</p>
                                 <p>Customer: {report.customerName}</p>
                                 <p>Status: {report.status}</p>
                             </li>
