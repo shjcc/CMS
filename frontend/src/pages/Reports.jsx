@@ -9,12 +9,16 @@ const Reports = () => {
         orderStatus: '',
     });
 
-    // Use the demo data from ReportsData.jsx when no API data is available
-    const fetchReports = async () => {
-        const query = new URLSearchParams(filters).toString();
-        const response = await fetch(`http://localhost:5000/api/reports?${query}`);
-        const data = await response.json();
-        setReports(data.length > 0 ? data : ReportsData); // Use ReportsData if API returns no data
+    // Filter reports based on selected filters
+    const filterReports = () => {
+        const filteredReports = ReportsData.filter((report) => {
+            return (
+                (filters.dateRange === '' || report.dateRange === filters.dateRange) &&
+                (filters.customerType === '' || report.customerType === filters.customerType) &&
+                (filters.orderStatus === '' || report.orderStatus === filters.orderStatus)
+            );
+        });
+        setReports(filteredReports);
     };
 
     // Handle filter change
@@ -24,7 +28,7 @@ const Reports = () => {
 
     // Fetch reports when filters change
     useEffect(() => {
-        fetchReports();
+        filterReports();
     }, [filters]);
 
     return (
@@ -81,7 +85,7 @@ const Reports = () => {
                                 <h3>{report.productName}</h3>
                                 <p>Sales: ${report.salesAmount}</p>
                                 <p>Customer: {report.customerName}</p>
-                                <p>Status: {report.status}</p>
+                                <p>Status: {report.orderStatus}</p>
                             </li>
                         ))}
                     </ul>
