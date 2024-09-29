@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
-import ReportsData from '../components/ReportsData.jsx'; // Import the local report data
+import ReportsData from '../components/ReportsData.jsx'; // Import local reports data
 
 const Reports = () => {
     const [reports, setReports] = useState([]);
-    const [loading, setLoading] = useState(false); // For loading state
+    const [loading, setLoading] = useState(false); // Track loading state
     const [filters, setFilters] = useState({
         dateRange: '',
         customerType: '',
         orderStatus: '',
     });
 
-    // Function to filter reports based on filters
+    // Function to filter reports based on selected filters
     const filterReports = () => {
-        console.log("Applying filters:", filters); // Debug log to track filters
+        console.log("Applying filters:", filters); // Debug: log filters
 
         setLoading(true); // Start loading
-
         setTimeout(() => {
-            // Filter reports using matching criteria
+            // Apply filters from ReportsData.jsx
             const filteredReports = ReportsData.filter((report) => {
-                console.log("Checking report:", report); // Debug log to track each report
-
                 const dateMatch = filters.dateRange === '' || report.dateRange === filters.dateRange;
                 const customerMatch = filters.customerType === '' || report.customerType === filters.customerType;
                 const statusMatch = filters.orderStatus === '' || report.orderStatus === filters.orderStatus;
@@ -28,13 +25,13 @@ const Reports = () => {
                 return dateMatch && customerMatch && statusMatch;
             });
 
-            console.log("Filtered reports:", filteredReports); // Debug log for filtered results
-            setReports(filteredReports);
+            console.log("Filtered reports:", filteredReports); // Debug: log filtered reports
+            setReports(filteredReports); // Set the filtered reports
             setLoading(false); // Stop loading
-        }, 500); // Simulate delay for loading
+        }, 500); // Simulate loading delay
     };
 
-    // Handle filter change
+    // Handle changes to filters
     const handleFilterChange = (filterName, filterValue) => {
         setFilters({ ...filters, [filterName]: filterValue });
     };
@@ -89,7 +86,7 @@ const Reports = () => {
             {/* Display Loading State */}
             {loading && <p>Loading reports...</p>}
 
-            {/* Display Reports */}
+            {/* Display Filtered Reports */}
             {!loading && reports.length > 0 ? (
                 <div>
                     <h2>Report Results</h2>
@@ -98,8 +95,9 @@ const Reports = () => {
                             <li key={report.id}>
                                 <h3>{report.productName}</h3>
                                 <p>Sales: ${report.salesAmount}</p>
-                                <p>Customer: {report.customerName}</p>
+                                <p>Customer: {report.customerName} ({report.customerType})</p>
                                 <p>Status: {report.orderStatus}</p>
+                                <p>Date Range: {report.dateRange}</p>
                             </li>
                         ))}
                     </ul>
