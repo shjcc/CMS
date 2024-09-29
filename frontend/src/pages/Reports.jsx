@@ -1,37 +1,35 @@
 import React, { useState } from 'react';
-import ReportsData from '../components/ReportsData.jsx'; // Import local reports data
+import ReportsData from '../components/ReportsData'; // Importing data
 
 const Reports = () => {
     const [reports, setReports] = useState([]);
-    const [loading, setLoading] = useState(false); // Track loading state
+    const [loading, setLoading] = useState(false);
     const [filters, setFilters] = useState({
         dateRange: '',
         customerType: '',
         orderStatus: '',
     });
 
-    // Function to filter reports based on selected filters
-    const filterReports = () => {
-        console.log("Applying filters:", filters); // Debug: log filters
-
-        setLoading(true); // Start loading
+    // Filter reports based on filters
+    const fetchReports = () => {
+        setLoading(true);
+        
+        // Simulate a network request with a timeout to mimic async behavior
         setTimeout(() => {
-            // Apply filters from ReportsData.jsx
             const filteredReports = ReportsData.filter((report) => {
                 const dateMatch = filters.dateRange === '' || report.dateRange === filters.dateRange;
-                const customerMatch = filters.customerType === '' || report.customerType === filters.customerType;
-                const statusMatch = filters.orderStatus === '' || report.orderStatus === filters.orderStatus;
+                const customerTypeMatch = filters.customerType === '' || report.customerType === filters.customerType;
+                const orderStatusMatch = filters.orderStatus === '' || report.orderStatus === filters.orderStatus;
 
-                return dateMatch && customerMatch && statusMatch;
+                return dateMatch && customerTypeMatch && orderStatusMatch;
             });
 
-            console.log("Filtered reports:", filteredReports); // Debug: log filtered reports
-            setReports(filteredReports); // Set the filtered reports
-            setLoading(false); // Stop loading
-        }, 500); // Simulate loading delay
+            setReports(filteredReports);
+            setLoading(false); // Set loading to false when done
+        }, 1000); // Simulate a 1-second delay
     };
 
-    // Handle changes to filters
+    // Handle filter change
     const handleFilterChange = (filterName, filterValue) => {
         setFilters({ ...filters, [filterName]: filterValue });
     };
@@ -78,33 +76,33 @@ const Reports = () => {
                         <option value="completed">Completed</option>
                     </select>
                 </div>
+
+                {/* Generate Report Button */}
+                <button type="button" onClick={fetchReports}>
+                    Generate Report
+                </button>
             </form>
 
-            {/* Generate Report Button */}
-            <button onClick={filterReports}>Generate Report</button>
-
-            {/* Display Loading State */}
-            {loading && <p>Loading reports...</p>}
-
-            {/* Display Filtered Reports */}
-            {!loading && reports.length > 0 ? (
-                <div>
-                    <h2>Report Results</h2>
+            {/* Display Reports */}
+            <div>
+                <h2>Report Results</h2>
+                {loading ? (
+                    <p>Loading reports...</p>
+                ) : reports.length > 0 ? (
                     <ul>
                         {reports.map((report) => (
                             <li key={report.id}>
                                 <h3>{report.productName}</h3>
                                 <p>Sales: ${report.salesAmount}</p>
-                                <p>Customer: {report.customerName} ({report.customerType})</p>
-                                <p>Status: {report.orderStatus}</p>
-                                <p>Date Range: {report.dateRange}</p>
+                                <p>Customer: {report.customerName}</p>
+                                <p>Status: {report.status}</p>
                             </li>
                         ))}
                     </ul>
-                </div>
-            ) : !loading && (
-                <p>No reports found for the selected filters.</p>
-            )}
+                ) : (
+                    <p>No reports found for the selected filters.</p>
+                )}
+            </div>
         </div>
     );
 };
