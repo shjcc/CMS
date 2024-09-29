@@ -6,24 +6,29 @@ const ReportsData = [
         productName: 'Product A',
         salesAmount: 1500,
         customerName: 'John Doe',
-        status: 'completed',
+        customerType: 'new',
+        dateRange: 'daily',
+        orderStatus: 'completed',
     },
     {
         id: 2,
         productName: 'Product B',
         salesAmount: 2000,
         customerName: 'Jane Smith',
-        status: 'pending',
+        customerType: 'returning',
+        dateRange: 'weekly',
+        orderStatus: 'pending',
     },
     {
         id: 3,
         productName: 'Product C',
         salesAmount: 1000,
         customerName: 'Alice Johnson',
-        status: 'completed',
+        customerType: 'new',
+        dateRange: 'monthly',
+        orderStatus: 'completed',
     },
-    // Add more demo data as needed
+    // Add more data as needed
 ];
 
 export default ReportsData;
-
