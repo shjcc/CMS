@@ -1,5 +1,3 @@
-// frontend/src/components/ReportsData.jsx
-
 const ReportsData = [
     {
         id: 1,
@@ -7,8 +5,8 @@ const ReportsData = [
         salesAmount: 1500,
         customerName: 'John Doe',
         customerType: 'new',
+        orderStatus: 'pending',
         dateRange: 'daily',
-        orderStatus: 'completed',
     },
     {
         id: 2,
@@ -16,8 +14,8 @@ const ReportsData = [
         salesAmount: 2000,
         customerName: 'Jane Smith',
         customerType: 'returning',
+        orderStatus: 'completed',
         dateRange: 'weekly',
-        orderStatus: 'pending',
     },
     {
         id: 3,
@@ -25,10 +23,9 @@ const ReportsData = [
         salesAmount: 1000,
         customerName: 'Alice Johnson',
         customerType: 'new',
-        dateRange: 'monthly',
         orderStatus: 'completed',
+        dateRange: 'monthly',
     },
-    // Add more data as needed
 ];
 
 export default ReportsData;
