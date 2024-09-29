@@ -1,41 +1,45 @@
 import React, { useState } from 'react';
-import ReportsData from '../components/ReportsData'; // Import the data
+import reportData from './ReportsData'; // Import your report data from ReportsData.jsx
 
 const Reports = () => {
-    const [reports, setReports] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [filters, setFilters] = useState({
-        dateRange: '',
-        customerType: '',
-        orderStatus: '',
+        dateRange: 'daily',
+        customerType: 'new',
+        orderStatus: 'pending',
     });
 
-    // Filter reports based on the selected filters
-    const fetchReports = () => {
-        setLoading(true);
+    const [filteredReports, setFilteredReports] = useState([]);
+    const [isGenerating, setIsGenerating] = useState(false); // Show loading state
 
-        console.log('Filters applied:', filters); // Debug: See which filters are being applied
-
-        // Simulate network request to filter the data
-        setTimeout(() => {
-            const filteredReports = ReportsData.filter((report) => {
-                const dateMatch = filters.dateRange === '' || report.dateRange === filters.dateRange;
-                const customerTypeMatch = filters.customerType === '' || report.customerType === filters.customerType;
-                const orderStatusMatch = filters.orderStatus === '' || report.orderStatus === filters.orderStatus;
-
-                return dateMatch && customerTypeMatch && orderStatusMatch;
-            });
-
-            console.log('Filtered Reports:', filteredReports); // Debug: See filtered reports
-            setReports(filteredReports); // Set the filtered reports
-            setLoading(false); // Stop loading after processing
-        }, 1000); // Simulate a delay
+    // Handle filter changes
+    const handleFilterChange = (e) => {
+        const { name, value } = e.target;
+        setFilters({ ...filters, [name]: value });
     };
 
-    // Handle filter change
-    const handleFilterChange = (filterName, filterValue) => {
-        setFilters({ ...filters, [filterName]: filterValue });
-        console.log(`Filter "${filterName}" changed to: ${filterValue}`); // Debug: Track filter changes
+    // Filter reports based on selected filters
+    const generateReport = () => {
+        setIsGenerating(true); // Show loading state
+        const { dateRange, customerType, orderStatus } = filters;
+
+        // Filter logic using the data in reportData
+        const filtered = reportData.filter((report) => {
+            const matchesDate = dateRange ? report.dateRange === dateRange : true;
+            const matchesCustomer = customerType ? report.customerType === customerType : true;
+            const matchesStatus = orderStatus ? report.status === orderStatus : true;
+
+            return matchesDate && matchesCustomer && matchesStatus;
+        });
+
+        setTimeout(() => {
+            setFilteredReports(filtered);
+            setIsGenerating(false); // Stop loading state
+        }, 500); // Simulate delay for loading
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        generateReport();
     };
 
     return (
@@ -43,14 +47,14 @@ const Reports = () => {
             <h1>Sales Reports</h1>
 
             {/* Filter Form */}
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label>Date Range:</label>
                     <select
+                        name="dateRange"
                         value={filters.dateRange}
-                        onChange={(e) => handleFilterChange('dateRange', e.target.value)}
+                        onChange={handleFilterChange}
                     >
-                        <option value="">Select Range</option>
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>
@@ -60,10 +64,10 @@ const Reports = () => {
                 <div>
                     <label>Customer Type:</label>
                     <select
+                        name="customerType"
                         value={filters.customerType}
-                        onChange={(e) => handleFilterChange('customerType', e.target.value)}
+                        onChange={handleFilterChange}
                     >
-                        <option value="">All</option>
                         <option value="new">New</option>
                         <option value="returning">Returning</option>
                     </select>
@@ -72,41 +76,39 @@ const Reports = () => {
                 <div>
                     <label>Order Status:</label>
                     <select
+                        name="orderStatus"
                         value={filters.orderStatus}
-                        onChange={(e) => handleFilterChange('orderStatus', e.target.value)}
+                        onChange={handleFilterChange}
                     >
-                        <option value="">All</option>
                         <option value="pending">Pending</option>
                         <option value="completed">Completed</option>
                     </select>
                 </div>
 
-                {/* Generate Report Button */}
-                <button type="button" onClick={fetchReports}>
-                    Generate Report
-                </button>
+                <button type="submit">Generate Report</button>
             </form>
 
-            {/* Display Reports */}
-            <div>
-                <h2>Report Results</h2>
-                {loading ? (
-                    <p>Loading reports...</p>
-                ) : reports.length > 0 ? (
+            {/* Loading state */}
+            {isGenerating && <p>Loading reports...</p>}
+
+            {/* Display filtered reports */}
+            {filteredReports.length > 0 && !isGenerating && (
+                <div>
+                    <h2>Report Results</h2>
                     <ul>
-                        {reports.map((report) => (
-                            <li key={report.id}>
+                        {filteredReports.map((report, index) => (
+                            <li key={index}>
                                 <h3>{report.productName}</h3>
                                 <p>Sales: ${report.salesAmount}</p>
                                 <p>Customer: {report.customerName}</p>
-                                <p>Status: {report.orderStatus}</p>
+                                <p>Status: {report.status}</p>
                             </li>
                         ))}
                     </ul>
-                ) : (
-                    <p>No reports found for the selected filters.</p>
-                )}
-            </div>
+                </div>
+            )}
+
+            {!isGenerating && filteredReports.length === 0 && <p>No reports found for the selected filters.</p>}
         </div>
     );
 };
