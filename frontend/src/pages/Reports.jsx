@@ -12,18 +12,26 @@ const Reports = () => {
 
     // Function to filter reports based on filters
     const filterReports = () => {
+        console.log("Applying filters:", filters); // Debug log to track filters
+
         setLoading(true); // Start loading
+
         setTimeout(() => {
+            // Filter reports using matching criteria
             const filteredReports = ReportsData.filter((report) => {
-                return (
-                    (filters.dateRange === '' || report.dateRange === filters.dateRange) &&
-                    (filters.customerType === '' || report.customerType === filters.customerType) &&
-                    (filters.orderStatus === '' || report.orderStatus === filters.orderStatus)
-                );
+                console.log("Checking report:", report); // Debug log to track each report
+
+                const dateMatch = filters.dateRange === '' || report.dateRange === filters.dateRange;
+                const customerMatch = filters.customerType === '' || report.customerType === filters.customerType;
+                const statusMatch = filters.orderStatus === '' || report.orderStatus === filters.orderStatus;
+
+                return dateMatch && customerMatch && statusMatch;
             });
+
+            console.log("Filtered reports:", filteredReports); // Debug log for filtered results
             setReports(filteredReports);
             setLoading(false); // Stop loading
-        }, 1000); // Simulate delay for loading
+        }, 500); // Simulate delay for loading
     };
 
     // Handle filter change
