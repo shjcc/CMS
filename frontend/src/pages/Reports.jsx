@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ReportsData from '../components/ReportsData'; // Importing data
+import ReportsData from '../components/ReportsData'; // Import the data
 
 const Reports = () => {
     const [reports, setReports] = useState([]);
@@ -10,11 +10,13 @@ const Reports = () => {
         orderStatus: '',
     });
 
-    // Filter reports based on filters
+    // Filter reports based on the selected filters
     const fetchReports = () => {
         setLoading(true);
-        
-        // Simulate a network request with a timeout to mimic async behavior
+
+        console.log('Filters applied:', filters); // Debug: See which filters are being applied
+
+        // Simulate network request to filter the data
         setTimeout(() => {
             const filteredReports = ReportsData.filter((report) => {
                 const dateMatch = filters.dateRange === '' || report.dateRange === filters.dateRange;
@@ -24,14 +26,16 @@ const Reports = () => {
                 return dateMatch && customerTypeMatch && orderStatusMatch;
             });
 
-            setReports(filteredReports);
-            setLoading(false); // Set loading to false when done
-        }, 1000); // Simulate a 1-second delay
+            console.log('Filtered Reports:', filteredReports); // Debug: See filtered reports
+            setReports(filteredReports); // Set the filtered reports
+            setLoading(false); // Stop loading after processing
+        }, 1000); // Simulate a delay
     };
 
     // Handle filter change
     const handleFilterChange = (filterName, filterValue) => {
         setFilters({ ...filters, [filterName]: filterValue });
+        console.log(`Filter "${filterName}" changed to: ${filterValue}`); // Debug: Track filter changes
     };
 
     return (
@@ -95,7 +99,7 @@ const Reports = () => {
                                 <h3>{report.productName}</h3>
                                 <p>Sales: ${report.salesAmount}</p>
                                 <p>Customer: {report.customerName}</p>
-                                <p>Status: {report.status}</p>
+                                <p>Status: {report.orderStatus}</p>
                             </li>
                         ))}
                     </ul>
