@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import ReportsData from '../components/ReportsData.jsx'; // Import the report data
+import React, { useState } from 'react';
+import ReportsData from '../components/ReportsData.jsx'; // Import the local report data
 
 const Reports = () => {
     const [reports, setReports] = useState([]);
+    const [loading, setLoading] = useState(false); // For loading state
     const [filters, setFilters] = useState({
         dateRange: '',
         customerType: '',
         orderStatus: '',
     });
 
-    // Filter reports based on selected filters
+    // Function to filter reports based on filters
     const filterReports = () => {
-        const filteredReports = ReportsData.filter((report) => {
-            return (
-                (filters.dateRange === '' || report.dateRange === filters.dateRange) &&
-                (filters.customerType === '' || report.customerType === filters.customerType) &&
-                (filters.orderStatus === '' || report.orderStatus === filters.orderStatus)
-            );
-        });
-        setReports(filteredReports);
+        setLoading(true); // Start loading
+        setTimeout(() => {
+            const filteredReports = ReportsData.filter((report) => {
+                return (
+                    (filters.dateRange === '' || report.dateRange === filters.dateRange) &&
+                    (filters.customerType === '' || report.customerType === filters.customerType) &&
+                    (filters.orderStatus === '' || report.orderStatus === filters.orderStatus)
+                );
+            });
+            setReports(filteredReports);
+            setLoading(false); // Stop loading
+        }, 1000); // Simulate delay for loading
     };
 
     // Handle filter change
     const handleFilterChange = (filterName, filterValue) => {
         setFilters({ ...filters, [filterName]: filterValue });
     };
-
-    // Fetch reports when filters change
-    useEffect(() => {
-        filterReports();
-    }, [filters]);
 
     return (
         <div>
@@ -75,10 +75,16 @@ const Reports = () => {
                 </div>
             </form>
 
+            {/* Generate Report Button */}
+            <button onClick={filterReports}>Generate Report</button>
+
+            {/* Display Loading State */}
+            {loading && <p>Loading reports...</p>}
+
             {/* Display Reports */}
-            <div>
-                <h2>Report Results</h2>
-                {reports.length > 0 ? (
+            {!loading && reports.length > 0 ? (
+                <div>
+                    <h2>Report Results</h2>
                     <ul>
                         {reports.map((report) => (
                             <li key={report.id}>
@@ -89,10 +95,10 @@ const Reports = () => {
                             </li>
                         ))}
                     </ul>
-                ) : (
-                    <p>No reports found for the selected filters.</p>
-                )}
-            </div>
+                </div>
+            ) : !loading && (
+                <p>No reports found for the selected filters.</p>
+            )}
         </div>
     );
 };
