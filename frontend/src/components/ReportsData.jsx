@@ -26,6 +26,7 @@ const ReportsData = [
         orderStatus: 'completed',
         dateRange: 'monthly',
     },
+    // Add more data as needed
 ];
 
 export default ReportsData;
