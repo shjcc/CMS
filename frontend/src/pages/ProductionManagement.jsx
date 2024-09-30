@@ -8,15 +8,23 @@ const recipes = {
 const ProductionManagement = () => {
     const [task, setTask] = useState({ product: 'cake', quantity: 1, date: '', time: '' });
     const [ingredients, setIngredients] = useState({});
+    const [confirmation, setConfirmation] = useState('');
+    const [totalProducts, setTotalProducts] = useState(0); // Track total number of products scheduled
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setTask({ ...task, [name]: value });
+        const updatedTask = { ...task, [name]: value };
+        setTask(updatedTask);
+        
+        // Automatically update the ingredient list when quantity or product changes
+        if (name === 'product' || name === 'quantity') {
+            calculateIngredients(updatedTask);
+        }
     };
 
-    const calculateIngredients = () => {
-        const selectedRecipe = recipes[task.product];
-        const quantity = parseInt(task.quantity, 10);
+    const calculateIngredients = (currentTask) => {
+        const selectedRecipe = recipes[currentTask.product];
+        const quantity = parseInt(currentTask.quantity, 10) || 0;
         const calculatedIngredients = {};
 
         for (let ingredient in selectedRecipe) {
@@ -28,8 +36,23 @@ const ProductionManagement = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        calculateIngredients();
-        // Additional logic for submitting the task can be added here.
+
+        // Validate the form inputs
+        if (task.quantity <= 0 || !task.date || !task.time) {
+            alert('Please enter a valid quantity, date, and time.');
+            return;
+        }
+
+        // Show confirmation message and update the total number of products
+        setConfirmation(`Scheduled production of ${task.quantity} ${task.product}(s) on ${task.date} at ${task.time}.`);
+        setTotalProducts(totalProducts + parseInt(task.quantity, 10)); // Increment the total product count
+    };
+
+    const handleReset = () => {
+        // Reset form inputs and state variables
+        setTask({ product: 'cake', quantity: 1, date: '', time: '' });
+        setIngredients({});
+        setConfirmation('');
     };
 
     return (
@@ -62,8 +85,10 @@ const ProductionManagement = () => {
                     <input type="time" name="time" value={task.time} onChange={handleInputChange} />
                 </div>
                 <button type="submit">Schedule Production</button>
+                <button type="button" onClick={handleReset}>Reset</button>
             </form>
 
+            {/* Display the list of required ingredients */}
             {Object.keys(ingredients).length > 0 && (
                 <div>
                     <h3>Required Ingredients for {task.quantity} {task.product}(s):</h3>
@@ -76,6 +101,14 @@ const ProductionManagement = () => {
                     </ul>
                 </div>
             )}
+
+            {/* Show confirmation message if set */}
+            {confirmation && <div style={{ marginTop: '20px', color: 'green' }}>{confirmation}</div>}
+
+            {/* Display total products scheduled */}
+            <div style={{ marginTop: '20px' }}>
+                <strong>Total Products Scheduled for Production: {totalProducts}</strong>
+            </div>
         </div>
     );
 };
