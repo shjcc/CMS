@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import OrderForm from '../components/OrderForm.jsx';
 import OrderList from '../components/OrderList.jsx';
 import EditOrderForm from '../components/EditOrderForm.jsx';
+import "../styles/Order.css";
 
 const OrderManagement = () => {
     const [orders, setOrders] = useState([]);
@@ -22,7 +23,7 @@ const OrderManagement = () => {
             body: JSON.stringify(newOrder),
         });
         if (response.ok) {
-            fetchOrders(); 
+            fetchOrders();
         }
     };
 
@@ -44,7 +45,7 @@ const OrderManagement = () => {
             body: JSON.stringify(updatedOrder),
         });
         if (response.ok) {
-            fetchOrders(); 
+            fetchOrders();
         }
     };
 
@@ -61,22 +62,23 @@ const OrderManagement = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Order Management</h1>
+        <div className="order-management-container">
             {editingOrder ? (
-                <EditOrderForm 
-                    order={editingOrder} 
-                    onUpdateOrder={updateOrder} 
-                    onCancel={cancelEdit} 
+                <EditOrderForm
+                    order={editingOrder}
+                    onUpdateOrder={updateOrder}
+                    onCancel={cancelEdit}
                 />
             ) : (
                 <>
                     <OrderForm onAddOrder={addOrder} />
-                    <OrderList 
-                        orders={orders} 
-                        onDeleteOrder={deleteOrder} 
-                        onEditOrder={editOrder} 
-                    />
+                    <div className="order-list">
+                        <OrderList
+                            orders={orders}
+                            onDeleteOrder={deleteOrder}
+                            onEditOrder={editOrder}
+                        />
+                    </div>
                 </>
             )}
         </div>

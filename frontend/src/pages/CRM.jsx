@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "../styles/CRM.css";
 
 // Customer data schema: { id, name, contact, orderHistory, preferences }
 const CRM = () => {

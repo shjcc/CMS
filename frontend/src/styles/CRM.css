@@ -1,0 +1,126 @@
+/* CRM Main Container */
+
+.crm-container {
+    display: flex; /* Flexbox for side-by-side layout */
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 40px 20px;
+    gap: 30px;
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Form container */
+.crm-container form {
+    flex: 1; /* Form takes up half of the width */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Form inputs styling */
+.crm-container form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccd1d9;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #f5f5f5;
+}
+
+/* Form button styling */
+.crm-container form button {
+    width: 100%;
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.crm-container form button:hover {
+    background-color: #2980b9;
+}
+
+/* Customer List Container */
+.crm-container ul {
+    flex: 1; /* List takes up the other half of the width */
+    list-style-type: none;
+    padding: 0;
+}
+
+.crm-container h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
+/* Customer List Item */
+.crm-container ul li {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.crm-container ul li strong {
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.crm-container ul li p {
+    margin: 5px 0;
+    color: #7f8c8d;
+    font-size: 1rem;
+}
+
+/* Buttons inside customer list */
+.crm-container ul li button {
+    margin-right: 10px;
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.crm-container ul li button:hover {
+    background-color: #c0392b;
+}
+
+/* Secondary Button for editing */
+.crm-container ul li button:first-child {
+    background-color: #f39c12;
+}
+
+.crm-container ul li button:first-child:hover {
+    background-color: #e67e22;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .crm-container {
+        flex-direction: column; /* Stack form and list vertically */
+        padding: 20px;
+    }
+
+    .crm-container form, .crm-container ul {
+        width: 100%; /* Make form and list full width on smaller screens */
+    }
+
+    .crm-container form button {
+        width: 100%; /* Ensure buttons take full width */
+    }
+}

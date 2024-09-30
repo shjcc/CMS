@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-
+import "../styles/order.css"; 
 
 const OrderForm = ({ onAddOrder }) => {
     const [customerName, setCustomerName] = useState('');
@@ -26,25 +26,29 @@ const OrderForm = ({ onAddOrder }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="order-form">
             <input
                 type="text"
                 placeholder="Customer Name"
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 required
+                className="order-input"
             />
-            <input
-                type="text"
-                placeholder="Status"
+            <select 
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                required
-            />
+                className="order-select"
+            >
+                <option value="">Select Status</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+            </select>
             <select 
                 value={orderType}
                 onChange={(e) => setOrderType(e.target.value)}
                 required
+                className="order-select"
             >
                 <option value="Pickup">Pickup</option>
                 <option value="Delivery">Delivery</option>
@@ -54,14 +58,16 @@ const OrderForm = ({ onAddOrder }) => {
                 value={scheduledDate}
                 onChange={(e) => setScheduledDate(e.target.value)}
                 required
+                className="order-date"
             />
             <input
                 type="time"
                 value={scheduledTime}
                 onChange={(e) => setScheduledTime(e.target.value)}
                 required
+                className="order-time"
             />
-            <button type="submit">Add Order</button>
+            <button type="submit" className="order-button">Add Order</button>
         </form>
     );
 };

@@ -1,0 +1,73 @@
+/* General styles for the page */
+.inventory-management {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Table styling */
+  .inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1em;
+    min-width: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .inventory-table th, .inventory-table td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+    text-align: left;
+  }
+  
+  .inventory-table thead tr {
+    background-color: #009879;
+    color: white;
+    text-align: left;
+  }
+  
+  .inventory-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  .inventory-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+  }
+  
+  .inventory-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+  }
+  
+  /* Style for expiring soon items */
+  .expiring-soon {
+    background-color: #ffcccc; /* Light red for items expiring soon */
+  }
+
+
+
+/* General alert box styles */
+.alert-box {
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 5px;
+}
+
+/* Style for expired items alert box */
+.expired-alerts {
+  background-color: #f8d7da; /* Light red background for expired items */
+  color: #721c24; /* Dark red text color */
+  border-left: 6px solid #721c24;
+}
+
+/* Style for close to expiry alert box */
+.alert-box:not(.expired-alerts) {
+  background-color: #fff3cd; /* Light orange background */
+  color: #856404; /* Darker orange text color */
+  border: 1px solid #ffeeba; /* Border to match the background */
+  border-left: 6px solid #ad761c;
+}

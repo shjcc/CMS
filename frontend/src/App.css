@@ -1,42 +1,67 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9; /* Light grey background to complement the navbar */
+  overflow: auto; /* Allow scrolling */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+
+nav {
+  background-color: #CFD2B2; /* Soft greenish background */
+  padding: 15px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul li {
+  margin: 0 20px; /* Increased spacing for a cleaner look */
+}
+
+nav ul li a {
+  text-decoration: none;
+  background-color: #CFD2B2;
+  color: #3D3D3D; /* Darker grey text for contrast */
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+nav ul li a:hover {
+  background-color: #A6AC86; /* Slightly darker greenish hover color */
+  color: white; /* White text on hover for contrast */
+}
+
+nav ul li a.active {
+  background-color: #A6AC86; /* Highlight the active link */
+  color: white; /* Ensure active link text is white */
+}
+
+nav ul li a:focus {
+  outline: none;
+  background-color: #89917F; /* Even darker green for focus */
+  color: white;
+}
+
+/* Responsive for Smaller Screens */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column; /* Stack items vertically on smaller screens */
   }
-  to {
-    transform: rotate(360deg);
+
+  nav ul li {
+    margin: 10px 0;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

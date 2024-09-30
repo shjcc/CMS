@@ -1,0 +1,96 @@
+/* Main container for production management */
+.production-container {
+    padding: 20px;
+    max-width: 1000px; 
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto; 
+}
+
+/* Flex container for form and ingredients list */
+.production-content {
+    display: flex;
+    gap: 30px; 
+    flex-wrap: wrap; 
+}
+
+/* Heading styling */
+.production-container h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form styling */
+.production-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1; 
+    min-width: 300px; 
+}
+
+.production-form label {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+/* Ensure all input fields and select elements have the same width */
+.production-form input[type="number"],
+.production-form input[type="date"],
+.production-form input[type="time"],
+.production-form select {
+    width: 100%; 
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.production-form button {
+    padding: 12px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.production-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Ingredients list styling */
+.ingredients-list {
+    flex: 1; 
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 300px; 
+}
+
+.ingredients-list h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.ingredients-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.ingredients-list li {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}

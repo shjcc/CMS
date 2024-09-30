@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-
+import "../styles/order.css"; 
 
 const EditOrderForm = ({ order, onUpdateOrder, onCancel }) => {
     const [customerName, setCustomerName] = useState('');
@@ -14,16 +14,15 @@ const EditOrderForm = ({ order, onUpdateOrder, onCancel }) => {
             setCustomerName(order.customerName);
             setStatus(order.status);
             setOrderType(order.orderType);
-            const formattedDate = dayjs(order.scheduledDate).format('DD/MM/YYYY');
-            setScheduledDate(order.scheduledDate); 
+            const formattedDate = dayjs(order.scheduledDate).format('YYYY-MM-DD'); 
+            setScheduledDate(formattedDate); 
             setScheduledTime(order.scheduledTime); 
         }
     }, [order]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formattedDate = dayjs(scheduledDate, 'DD/MM/YYYY').format('YYYY-MM-DD');
-
+        const formattedDate = dayjs(scheduledDate).format('YYYY-MM-DD'); 
 
         const updatedOrder = { customerName, status, orderType, scheduledDate: formattedDate, scheduledTime };
         await onUpdateOrder(order.id, updatedOrder);

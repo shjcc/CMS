@@ -1,0 +1,60 @@
+/* Overall container styling */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+    background-color: #F8F8F8; /* Off-white background */
+    font-family: Arial, sans-serif;
+    height: 85vh;
+    box-sizing: border-box;
+}
+
+
+/* Alert and summary boxes */
+.alert-box, .summary-box {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.alert-box:hover, .summary-box:hover {
+    transform: scale(1.02);
+}
+
+.alert-box h3, .summary-box h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #4A5A32; /* Dark green heading color */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 8px 0;
+    border-bottom: 1px solid #EEE;
+    color: #3B3B3B; /* Dark grey text */
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Styling for the total orders box */
+.summary-box {
+    text-align: center;
+    font-size: 1.5em;
+    background-color: #e4e7d34d; /* Light green background */
+}
+
+.summary-box p {
+    font-size: 2em;
+    color: #4A5A32; /* Dark green text */
+    margin: 10px 0;
+}
