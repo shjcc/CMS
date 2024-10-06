@@ -28,12 +28,12 @@ function Login({ onLogin }) {
                 <img
                     id="councilLogo"
                     className="image"
-                    src="/src/assets/council-logo.png"
+                    src="/src/assets/council-logo.svg"
                     alt="Image not found"
                 />
 
                 {/* title */}
-                <h2>Social Enterprise Catering <span className="break-word">Management</span></h2>
+                <h2>Catering Management System</h2>
 
                 <div className="login-container">
                     <div className="login-box">
