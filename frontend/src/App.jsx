@@ -9,6 +9,8 @@ import Reports from './pages/Reports';
 import ForgotPassword from './pages/ForgotPassword';
 import "./Login.css"; 
 import "./App.css";
+import logo from './assets/council-logo.svg'; 
+
 
 function Login({ onLogin }) {
     const [email, setEmail] = useState('');
@@ -25,12 +27,12 @@ function Login({ onLogin }) {
         <div className="title-container">
             {/* left side for logo and title */}
             <div className="title-content">
-                <img
-                    id="councilLogo"
-                    className="image"
-                    src="/src/assets/council-logo.svg"
-                    alt="Image not found"
-                />
+            <img 
+            id="councilLogo"
+            className="image"
+            src={logo}  
+            alt="Council Logo"
+            />
 
                 {/* title */}
                 <h2>Catering Management System</h2>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import "../styles/order.css"; 
+import "../styles/Order.css";
 
 const EditOrderForm = ({ order, onUpdateOrder, onCancel }) => {
     const [customerName, setCustomerName] = useState('');

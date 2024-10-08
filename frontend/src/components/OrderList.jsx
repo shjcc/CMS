@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs'; 
-import "../styles/order.css"; 
+import "../styles/Order.css";
 
 const OrderList = ({ orders, onDeleteOrder, onEditOrder }) => {
     return (

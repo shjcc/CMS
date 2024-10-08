@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
-import "../styles/order.css"; 
+import "../styles/Order.css";
 
 const OrderForm = ({ onAddOrder }) => {
     const [customerName, setCustomerName] = useState('');
