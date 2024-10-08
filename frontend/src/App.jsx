@@ -9,7 +9,7 @@ import Reports from './pages/Reports';
 import ForgotPassword from './pages/ForgotPassword';
 import "./Login.css"; 
 import "./App.css";
-import logo from '../assets/council-logo.svg'; 
+import logo from './assets/council-logo.svg'; 
 
 
 function Login({ onLogin }) {
