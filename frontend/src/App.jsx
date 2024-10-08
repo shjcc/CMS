@@ -28,7 +28,7 @@ function Login({ onLogin }) {
                 <img
                     id="councilLogo"
                     className="image"
-                    src="/src/assets/council-logo.svg"
+                    src="assets/council-logo.svg" 
                     alt="Image not found"
                 />
 
