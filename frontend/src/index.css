@@ -1,3 +1,11 @@
+html {
+  font-size: 100%; /* This ensures 16px default font size */
+}
+
+body {
+  font-size: 1rem; /* 1rem equals the root font size (typically 16px) */
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
