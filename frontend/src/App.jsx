@@ -28,8 +28,8 @@ function Login({ onLogin }) {
                 <img
                     id="councilLogo"
                     className="image"
-                    src="assets/council-logo.svg" 
-                    alt="Image not found"
+                    import logo from '../assets/council-logo.svg';
+                    <img src={logo} alt="Council Logo" />
                 />
 
                 {/* title */}
