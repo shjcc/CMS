@@ -40,7 +40,7 @@ body {
     position: relative;
     top: 1rem;
     right: 12rem;
-    width: 250px; 
+    width: 350px; 
     height: auto;
     margin-right: rem;
 }
@@ -50,7 +50,7 @@ body {
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-variant: small-caps;
     position: relative;
-    left: -0.4rem;
+    left: -0rem;
     top: 3.5rem;
     padding: 40px;
     font-size: 1.5rem;
@@ -59,7 +59,6 @@ body {
     margin: 0;
 }
 
-
 /* container for login section */
 .login-container {
     margin-top: 1.5rem;
@@ -67,15 +66,15 @@ body {
 
 /* box containing form and button */
 .login-box {
-    padding: 2rem;
-    padding-top: 3rem;
+    padding: 2.5rem;
+    padding-top: 4rem;
     position: relative;
     bottom: 50px;
     border: 100px;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 /* input sections for login form */
