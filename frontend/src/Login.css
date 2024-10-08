@@ -43,7 +43,7 @@ body {
     position: relative;
     top: 1rem;
     right: 12rem;
-    width: 50%; 
+    width: 40%; 
     height: auto;
 }
 
@@ -52,7 +52,7 @@ body {
     font-variant: small-caps;
     position: relative;
     left: 1.8rem;
-    top: 5rem;
+    top: 6.5rem;
     font-size: 1.5rem;
     white-space: nowrap;
     color: #000000;
@@ -61,6 +61,7 @@ body {
 
 .login-container {
     margin-top: 1.5rem;
+    padding-top: 2rem;
 }
 
 .login-box {
