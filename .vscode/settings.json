@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/5ba5efa7-232e-4026-b0a9-862bb4d4627b/resourceGroups/cms-meow-management_group/providers/Microsoft.Web/sites/cms-meow-management",
+    "appService.showBuildDuringDeployPrompt": false,
+}

@@ -1,26 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import '../styles/Inventory.css'; // Make sure to include the CSS styles
+// src/components/InventoryManagement.jsx
+
+import React, { useEffect, useState } from 'react';
+import {
+  fetchIngredients,
+  addIngredient,
+  updateIngredient,
+  deleteIngredient
+} from '../components/Inventory';
 
 const InventoryManagement = () => {
   const [ingredients, setIngredients] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [expiredItems, setExpiredItems] = useState([]);
+  const [newIngredient, setNewIngredient] = useState({
+    name: '',
+    quantity: 0,
+    expiry: '',
+  });
+  const [editingIngredient, setEditingIngredient] = useState(null);
 
-  // Sample data for demonstration
-  const sampleData = [
-    { name: 'Milk', quantity: 6, expiry: '2024-05-10' },
-    { name: 'Cheese', quantity: 4, expiry: '2024-09-30' }, // This will be expired
-    { name: 'Yogurt', quantity: 10, expiry: '2024-10-05' },
-    { name: 'Butter', quantity: 3, expiry: '2024-10-01' }, // This will be expired
-  ];
+  const loadIngredients = async () => {
+    try {
+      const data = await fetchIngredients();
+      setIngredients(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  // Fetch ingredients from API using fetch
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewIngredient((prev) => ({
+      ...prev,
+      [name]: name === 'quantity' ? parseInt(value) : value,
+    }));
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (editingIngredient) {
+        await updateIngredient(editingIngredient.id, newIngredient);
+        setEditingIngredient(null); // Reset editing state
+      } else {
+        await addIngredient(newIngredient);
+      }
+      setNewIngredient({ name: '', quantity: 0, expiry: '' });
+      loadIngredients();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEditIngredient = (item) => {
+    setEditingIngredient(item);
+    setNewIngredient({
+      name: item.name,
+      quantity: item.quantity,
+      expiry: item.expiry,
+    });
+  };
+
+  const handleDeleteIngredient = async (id) => {
+    try {
+      await deleteIngredient(id);
+      loadIngredients();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
-    // Instead of fetching from an API, we'll use sample data for now
-    setIngredients(sampleData);
+    loadIngredients();
   }, []);
 
-  // Check for ingredients with short shelf life and expired items
   useEffect(() => {
     const today = new Date();
     const upcomingAlerts = [];
@@ -29,12 +82,12 @@ const InventoryManagement = () => {
     ingredients.forEach(item => {
       const expiryDate = new Date(item.expiry);
       const timeDiff = expiryDate - today;
-      const daysLeft = timeDiff / (1000 * 3600 * 24); // Convert milliseconds to days
+      const daysLeft = timeDiff / (1000 * 3600 * 24);
 
       if (daysLeft < 0) {
-        expired.push(item); // Item is expired
+        expired.push(item);
       } else if (daysLeft <= 3) {
-        upcomingAlerts.push(item); // Item is expiring soon
+        upcomingAlerts.push(item);
       }
     });
 
@@ -42,7 +95,6 @@ const InventoryManagement = () => {
     setExpiredItems(expired);
   }, [ingredients]);
 
-  // Helper function to format date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -55,6 +107,35 @@ const InventoryManagement = () => {
   return (
     <div className="inventory-management">
       <h1>Inventory Management</h1>
+
+      <form onSubmit={handleFormSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={newIngredient.name}
+          placeholder="Ingredient Name"
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="number"
+          name="quantity"
+          value={newIngredient.quantity}
+          placeholder="Quantity"
+          onChange={handleInputChange}
+          required
+        />
+        <input
+          type="date"
+          name="expiry"
+          value={newIngredient.expiry}
+          onChange={handleInputChange}
+          required
+        />
+        <button type="submit">
+          {editingIngredient ? 'Update Ingredient' : 'Add Ingredient'}
+        </button>
+      </form>
 
       {expiredItems.length > 0 && (
         <div className="alert-box expired-alerts">
@@ -88,17 +169,19 @@ const InventoryManagement = () => {
             <th>Ingredient</th>
             <th>Quantity</th>
             <th>Expiry Date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {ingredients.map((item, index) => (
-            <tr 
-              key={index} 
-              className={new Date(item.expiry) - new Date() <= 3 * 24 * 3600 * 1000 ? 'expiring-soon' : ''}
-            >
+            <tr key={index} className={new Date(item.expiry) - new Date() <= 3 * 24 * 3600 * 1000 ? 'expiring-soon' : ''}>
               <td>{item.name}</td>
               <td>{item.quantity}</td>
               <td>{formatDate(item.expiry)}</td>
+              <td>
+                <button onClick={() => handleEditIngredient(item)}>Edit</button>
+                <button onClick={() => handleDeleteIngredient(item.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>

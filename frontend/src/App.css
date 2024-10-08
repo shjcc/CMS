@@ -4,6 +4,7 @@ body {
   padding: 0;
   background-color: #f4f4f9; /* Light grey background to complement the navbar */
   overflow: auto; /* Allow scrolling */
+  width: 100%;
 }
 
 
