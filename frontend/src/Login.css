@@ -48,11 +48,11 @@ body {
 }
 
 .title-container h2 {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-variant: small-caps;
     position: relative;
-    left: 1.8rem;
-    top: 6.5rem;
+    left: 1.9rem;
+    top: 7rem;
     font-size: 1.5rem;
     white-space: nowrap;
     color: #000000;
@@ -60,7 +60,7 @@ body {
 }
 
 .login-container {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
     padding-top: 2rem;
 }
 
