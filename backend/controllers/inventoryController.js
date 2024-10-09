@@ -2,7 +2,7 @@ const { db } = require('../config');
 
 // Get all inventory items
 const getInventory = (req, res) => {
-  const query = 'SELECT * FROM ingredients'; // Make sure your table name is correct
+  const query = 'SELECT * FROM ingredients'; 
   db.query(query, (err, results) => {
     if (err) return res.status(500).json({ error: 'Database error' });
     res.json(results);
