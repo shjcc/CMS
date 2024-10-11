@@ -10,7 +10,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 // Initialize Square client
-const squareClient = new Client({
+const squareCustomer = new customer({
   accessToken: 'EAAAl9FmrlJ5J4vILUWfhnA0lY_H8-1QHgbOdv3Oi09WZLJRMm878mVFtwHoGClw',
   environment: 'sandbox',
 });
