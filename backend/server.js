@@ -3,14 +3,16 @@ const cors = require('cors');
 const { getOrders, createOrder, updateOrder, deleteOrder } = require('./controllers/orderController');
 const { getInventory, createInventoryItem, updateInventoryItem, deleteInventoryItem } = require('./controllers/inventoryController');
 
+const { Client } = require('square');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-// Initialize Square client
-const squareCustomer = new customer({
+// Initialise Square client
+const squareClient = new Client({
   accessToken: 'EAAAl9FmrlJ5J4vILUWfhnA0lY_H8-1QHgbOdv3Oi09WZLJRMm878mVFtwHoGClw',
   environment: 'sandbox',
 });
