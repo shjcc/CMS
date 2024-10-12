@@ -14,33 +14,30 @@ const Reports = () => {
     const [salesFilters, setSalesFilters] = useState({
         startDate: '',
         endDate: '',
-        selectedMonth: '', // New state for month selection
-        yearToDate: false, // New state for year-to-date selection
+        selectedMonth: '',
+        yearToDate: false,
     });
 
     const [filteredReports, setFilteredReports] = useState([]);
-    const [orderResults, setOrderResults] = useState([]); // New state for order results
-    const [isGeneratingOrders, setIsGeneratingOrders] = useState(false); // Show loading state for orders
-    const [isGeneratingSales, setIsGeneratingSales] = useState(false); // Show loading state for sales reports
+    const [orderResults, setOrderResults] = useState([]);
+    const [salesResults, setSalesResults] = useState([]); // New state for sales results
+    const [isGeneratingOrders, setIsGeneratingOrders] = useState(false);
+    const [isGeneratingSales, setIsGeneratingSales] = useState(false);
 
-    // Handle order filter changes
     const handleOrderFilterChange = (e) => {
         const { name, value } = e.target;
         setOrderFilters({ ...orderFilters, [name]: value });
     };
 
-    // Handle sales filter changes
     const handleSalesFilterChange = (e) => {
         const { name, value, type, checked } = e.target;
         setSalesFilters({ ...salesFilters, [name]: type === 'checkbox' ? checked : value });
     };
 
-    // Filter reports based on order filters
     const generateOrderReport = () => {
-        setIsGeneratingOrders(true); // Show loading state
+        setIsGeneratingOrders(true);
         const { startDate, endDate, customerType, orderStatus } = orderFilters;
 
-        // Filter logic using the data in reportData
         const filtered = reportData.filter((report) => {
             const matchesDate = (!startDate || report.date >= startDate) && (!endDate || report.date <= endDate);
             const matchesCustomer = customerType ? report.customerType === customerType : true;
@@ -50,18 +47,19 @@ const Reports = () => {
         });
 
         setTimeout(() => {
-            setOrderResults(filtered); // Set order results
+            setOrderResults(filtered);
+            setSalesResults([]); // Clear sales results when generating order report
             setFilteredReports([]); // Clear filtered reports for sales
-            setIsGeneratingOrders(false); // Stop loading state
-        }, 500); // Simulate delay for loading
+            setIsGeneratingOrders(false);
+        }, 500);
     };
 
-    // Generate sales report based on sales filters
     const generateSalesReport = () => {
-        setIsGeneratingSales(true); // Show loading state
+        setIsGeneratingSales(true);
         const { startDate, endDate, selectedMonth, yearToDate } = salesFilters;
 
         let filteredSales = reportData;
+        let salesResultsTemp = []; // Temporary array for sales results
 
         if (yearToDate) {
             const currentYear = new Date().getFullYear();
@@ -73,7 +71,11 @@ const Reports = () => {
             const monthIndex = new Date(Date.parse(selectedMonth + " 1, 2021")).getMonth(); // Convert month name to index
             filteredSales = reportData.filter((report) => {
                 const reportDate = new Date(report.date);
-                return reportDate.getMonth() === monthIndex; // Filter by selected month
+                const matchesMonth = reportDate.getMonth() === monthIndex; // Filter by selected month
+                if (matchesMonth) {
+                    salesResultsTemp.push(report); // Add matching report to sales results
+                }
+                return matchesMonth;
             });
         } else {
             // If no month or year-to-date is selected, filter by date range
@@ -83,10 +85,11 @@ const Reports = () => {
         }
 
         setTimeout(() => {
-            setFilteredReports(filteredSales); // Set filtered sales reports
+            setSalesResults(salesResultsTemp); // Set filtered sales results
+            setFilteredReports(filteredSales); // Set filtered sales reports for the chart
             setOrderResults([]); // Clear order results
-            setIsGeneratingSales(false); // Stop loading state
-        }, 500); // Simulate delay for loading
+            setIsGeneratingSales(false);
+        }, 500);
     };
 
     const handleOrderSubmit = (e) => {
@@ -101,8 +104,6 @@ const Reports = () => {
 
     // Prepare data for sales chart
     const chartData = [];
-    
-    // Group by month and sum sales amounts
     filteredReports.forEach(report => {
         const reportDate = new Date(report.date);
         const month = reportDate.toLocaleString('default', { month: 'long' }); // Get month name
@@ -116,10 +117,7 @@ const Reports = () => {
         }
     });
 
-    // Calculate yearly total sales
-    const yearlyTotal = filteredReports.reduce((total, report) => total + report.salesAmount, 0);
-
-    // Check if the last action was generating a sales report
+    // Check if there are sales results to display
     const showSalesChart = !isGeneratingOrders && filteredReports.length > 0 && (salesFilters.startDate || salesFilters.selectedMonth || salesFilters.yearToDate);
 
     return (
@@ -261,25 +259,40 @@ const Reports = () => {
             {/* Sales Report Results */}
             <div className="report-results">
                 {isGeneratingSales && <p className="loading-message">Loading sales reports...</p>}
-                {showSalesChart && (
+                {!isGeneratingSales && salesResults.length > 0 && (
                     <div>
                         <h2>Sales Report Results</h2>
-                        <h3>Total Sales This Year: ${yearlyTotal}</h3> {/* Display total sales */}
-                        <ResponsiveContainer width="100%" height={300}>
-                            <BarChart data={chartData}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name">
-                                    <Label value="Month" offset={0} position="bottom" />
-                                </XAxis>
-                                <YAxis>
-                                    <Label value="Sales ($)" angle={-90} position="insideLeft" />
-                                </YAxis>
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="sales" fill="#8884d8" />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        <ul>
+                            {salesResults.map((report, index) => (
+                                <li key={index}>
+                                    <h3>Customer: {report.customerName}</h3>
+                                    <p>Product: {report.productName}</p>
+                                    <p>Sales: ${report.salesAmount}</p>
+                                    <p>Date: {report.date}</p>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
+                )}
+            </div>
+
+            {/* Add spacing between results and chart */}
+            <div className="chart-container">
+                {showSalesChart && (
+                    <ResponsiveContainer width="100%" height={400}>
+                        <BarChart data={chartData}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name">
+                                <Label value="Month" position="bottom" />
+                            </XAxis>
+                            <YAxis>
+                                <Label value="Sales ($)" angle={-90} position="insideLeft" />
+                            </YAxis>
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="sales" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
                 )}
             </div>
         </div>
