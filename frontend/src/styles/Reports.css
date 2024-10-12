@@ -1,23 +1,31 @@
 /* Main container */
 .reports-container {
-    display: flex; /* Flexbox for side-by-side layout */
-    justify-content: space-between;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
     padding: 20px;
-    gap: 20px;
+    gap: 30px; /* Gap between sections */
     box-sizing: border-box;
     max-width: 1200px;
-    margin: 0 auto; /* Center the content horizontally */
+    margin: 0 auto;
 }
 
-/* Sidebar-like Form container */
+/* Flex container for search forms */
+.search-forms-container {
+    display: flex; /* Enable flexbox layout */
+    justify-content: space-between; /* Space out the forms */
+    gap: 20px; /* Space between the two forms */
+    margin-bottom: 30px; /* Add margin to separate from the chart */
+}
+
+/* Each form inside the search form container */
 .form-container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 0 1 30%; /* Make form take up 30% of the width */
-    min-width: 280px; /* Ensure form doesn't shrink too small */
+    flex: 1; /* Make forms share space equally */
+    min-width: 300px; /* Minimum width for forms to ensure they stay side by side */
+    box-sizing: border-box;
 }
 
 .form-container div {
@@ -32,8 +40,9 @@
     color: #34495e;
 }
 
-.form-container select, .form-container button {
-    width: 100%;
+.form-container select,
+.form-container button {
+    width: 100%; /* Full width for select and button */
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccd1d9;
@@ -41,11 +50,12 @@
     margin-top: 5px;
 }
 
+/* Button */
 button {
     background-color: #3498db;
     color: #fff;
     font-size: 1rem;
-    padding: 10px 20px;
+    padding: 12px 24px; /* Increase padding */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -53,52 +63,32 @@ button {
     margin-top: 20px;
 }
 
-button:hover {
-    background-color: #2980b9;
+/* Separator line for clarity */
+.separator {
+    margin: 20px 0; /* Space above and below the separator */
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: #555;
 }
 
 /* Report results container */
 .report-results {
-    flex: 1; /* Make the report section take remaining space */
     background-color: #ffffff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 80vh; /* Limit height */
-    overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
-.report-results h2 {
-    font-size: 1.5rem;
-    color: #34495e;
-    margin-bottom: 20px;
-}
-
-/* Loading state */
-.loading-message {
+/* Error message styling */
+.error-message {
+    color: red;
     text-align: center;
-    font-size: 1.1rem;
-    color: #7f8c8d;
+    margin: 20px 0;
+    font-weight: bold;
 }
 
-/* Message when no reports found */
-.no-reports {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #c0392b;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .reports-container {
-        flex-direction: column; /* Stack form and report vertically */
-    }
-
-    .form-container {
-        width: 100%;
-    }
-
-    .report-results {
-        width: 100%;
-    }
+/* Chart container */
+.chart-container {
+    margin-top: 30px; /* Space above the chart */
 }
