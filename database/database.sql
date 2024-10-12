@@ -1,28 +1,33 @@
-CREATE DATABASE catering_system;
+-- Only create the database if it does not exist
+CREATE DATABASE IF NOT EXISTS catering_system;
 USE catering_system;
 
-CREATE TABLE orders (
+-- Create the orders table
+CREATE TABLE IF NOT EXISTS orders (
   id INT AUTO_INCREMENT PRIMARY KEY,
   customerName VARCHAR(100),
   status VARCHAR(50),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE ingredients (
+-- Create the ingredients table
+CREATE TABLE IF NOT EXISTS ingredients (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
   quantity INT,
   expiry DATE
 );
 
-CREATE TABLE recipes (
+-- Create the recipes table
+CREATE TABLE IF NOT EXISTS recipes (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   description TEXT,
   total_quantity INT
 );
 
-CREATE TABLE recipe_ingredients (
+-- Create the recipe_ingredients table with foreign keys
+CREATE TABLE IF NOT EXISTS recipe_ingredients (
   id INT AUTO_INCREMENT PRIMARY KEY,
   recipe_id INT,
   ingredient_id INT,
@@ -31,7 +36,8 @@ CREATE TABLE recipe_ingredients (
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
 );
 
-CREATE TABLE workflows (
+-- Create the workflows table with foreign key
+CREATE TABLE IF NOT EXISTS workflows (
   id INT AUTO_INCREMENT PRIMARY KEY,
   recipe_id INT,
   step_number INT,
@@ -39,7 +45,8 @@ CREATE TABLE workflows (
   FOREIGN KEY (recipe_id) REFERENCES recipes(id)
 );
 
-CREATE TABLE wasted_items (
+-- Create the wasted_items table with foreign key
+CREATE TABLE IF NOT EXISTS wasted_items (
   id INT AUTO_INCREMENT PRIMARY KEY,
   ingredient_id INT,
   quantity_wasted INT,
