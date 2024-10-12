@@ -1,5 +1,4 @@
 CREATE DATABASE catering_system;
-
 USE catering_system;
 
 CREATE TABLE orders (
@@ -9,9 +8,6 @@ CREATE TABLE orders (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO orders (customerName, status) VALUES ('Alice', 'Pending');
-INSERT INTO orders (customerName, status) VALUES ('Bob', 'Completed');
-
 CREATE TABLE ingredients (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100),
@@ -19,9 +15,35 @@ CREATE TABLE ingredients (
   expiry DATE
 );
 
-INSERT INTO ingredients (name, quantity, expiry) 
-VALUES 
-  ('Milk', 6, '2024-05-10'),
-  ('Cheese', 4, '2024-09-30'),
-  ('Yogurt', 10, '2024-10-05'),
-  ('Butter', 3, '2024-10-01');
+CREATE TABLE recipes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  total_quantity INT
+);
+
+CREATE TABLE recipe_ingredients (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  recipe_id INT,
+  ingredient_id INT,
+  quantity_required INT,
+  FOREIGN KEY (recipe_id) REFERENCES recipes(id),
+  FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
+);
+
+CREATE TABLE workflows (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  recipe_id INT,
+  step_number INT,
+  instruction TEXT,
+  FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+);
+
+CREATE TABLE wasted_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ingredient_id INT,
+  quantity_wasted INT,
+  reason TEXT,
+  wasted_on DATE,
+  FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
+);
