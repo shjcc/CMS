@@ -2,14 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const { getOrders, createOrder, updateOrder, deleteOrder } = require('./controllers/orderController');
 const { getInventory, createInventoryItem, updateInventoryItem, deleteInventoryItem } = require('./controllers/inventoryController');
-const { createPayment } = require('./squarePayment');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Add the Square payment route
-app.post('/api/payment', createPayment);
+
 
 const PORT = process.env.PORT || 5000;
 
