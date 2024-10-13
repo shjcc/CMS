@@ -1,5 +1,5 @@
 // src/components/InventoryManagement.jsx
-
+import '../styles/Inventory.css';
 import React, { useEffect, useState } from 'react';
 import {
   fetchIngredients,
@@ -106,62 +106,69 @@ const InventoryManagement = () => {
 
   return (
     <div className="inventory-management">
-      <h1>Inventory Management</h1>
-
-      <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={newIngredient.name}
-          placeholder="Ingredient Name"
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="number"
-          name="quantity"
-          value={newIngredient.quantity}
-          placeholder="Quantity"
-          onChange={handleInputChange}
-          required
-        />
-        <input
-          type="date"
-          name="expiry"
-          value={newIngredient.expiry}
-          onChange={handleInputChange}
-          required
-        />
-        <button type="submit">
-          {editingIngredient ? 'Update Ingredient' : 'Add Ingredient'}
-        </button>
-      </form>
-
-      {expiredItems.length > 0 && (
-        <div className="alert-box expired-alerts">
-          <h2>Alert: Expired Items</h2>
-          <ul>
-            {expiredItems.map((expiredItem, index) => (
-              <li key={index} className="alert-item expired-item">
-                {expiredItem.name} has expired! (Expiry: {formatDate(expiredItem.expiry)})
-              </li>
-            ))}
-          </ul>
+      <h1> Inventory Management </h1>
+      
+      <div className="container">
+        <div className="add-ingredient">
+          <h2>Add Ingredient</h2>
+          <form onSubmit={handleFormSubmit}>
+            <input
+              type="text"
+              name="name"
+              value={newIngredient.name}
+              placeholder="Ingredient Name"
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="number"
+              name="quantity"
+              value={newIngredient.quantity}
+              placeholder="Quantity"
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="date"
+              name="expiry"
+              value={newIngredient.expiry}
+              onChange={handleInputChange}
+              required
+            />
+            <button type="submit">
+              {editingIngredient ? 'Update Ingredient' : 'Add Ingredient'}
+            </button>
+          </form>
         </div>
-      )}
 
-      {alerts.length > 0 && (
-        <div className="alert-box">
-          <h2>Alert: Items Close to Expiry</h2>
-          <ul>
-            {alerts.map((alertItem, index) => (
-              <li key={index} className="alert-item">
-                {alertItem.name} is expiring soon! (Expiry: {formatDate(alertItem.expiry)})
-              </li>
-            ))}
-          </ul>
+        <div className="alerts">
+          {expiredItems.length > 0 && (
+            <div className="alert-box expired-alerts">
+              <h2>Alert: Expired Items</h2>
+              <ul>
+                {expiredItems.map((expiredItem, index) => (
+                  <li key={index} className="alert-item expired-item">
+                    {expiredItem.name} has expired! (Expiry: {formatDate(expiredItem.expiry)})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {alerts.length > 0 && (
+            <div className="alert-box">
+              <h2>Alert: Items Close to Expiry</h2>
+              <ul>
+                {alerts.map((alertItem, index) => (
+                  <li key={index} className="alert-item">
+                    {alertItem.name} is expiring soon! (Expiry: {formatDate(alertItem.expiry)})
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       <table className="inventory-table">
         <thead>
