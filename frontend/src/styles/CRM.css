@@ -13,8 +13,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Form container */
-.crm-container form {
+/* Form Section */
+.form-section {
     flex: 1; 
     background-color: #ffffff;
     padding: 20px;
@@ -22,15 +22,28 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Form Title */
+.form-title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #34495e;
+}
+
 /* Form inputs styling */
-.crm-container form input {
-    width: 100%;
+.crm-container form input,
+.crm-container form select {
+    width: 95%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccd1d9;
     border-radius: 4px;
     font-size: 1rem;
     background-color: #f5f5f5;
+}
+
+.crm-container form select {
+    width: 99.2%;
+
 }
 
 /* Form button styling */
@@ -50,41 +63,46 @@
     background-color: #2980b9;
 }
 
-/* Customer List Container */
-.crm-container ul {
+/* Customer List Section */
+.customer-list-section {
     flex: 1; 
-    list-style-type: none;
-    padding: 0;
+    overflow-y: auto; /* Allows scrolling */
+    max-height: 600px; /* Set a max height for scrolling */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.crm-container h3 {
+/* Customer List Title */
+.customer-list-title {
     font-size: 1.5rem;
     margin-bottom: 20px;
     color: #34495e;
 }
 
+/* Customer List Container */
+.crm-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 /* Customer List Item */
-.crm-container ul li {
-    background-color: #ffffff;
+.customer-item {
+    background-color: #f5f5f5;
     padding: 15px;
     margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.crm-container ul li strong {
+.customer-item strong {
     font-size: 1.2rem;
     color: #2c3e50;
 }
 
-.crm-container ul li p {
-    margin: 5px 0;
-    color: #7f8c8d;
-    font-size: 1rem;
-}
-
 /* Buttons inside customer list */
-.crm-container ul li button {
+.customer-item button {
     margin-right: 10px;
     background-color: #e74c3c;
     color: white;
@@ -95,27 +113,17 @@
     font-size: 0.9rem;
 }
 
-.crm-container ul li button:hover {
+.customer-item button:hover {
     background-color: #c0392b;
 }
 
 /* Secondary Button for editing */
-.crm-container ul li button:first-child {
+.customer-item button:first-child {
     background-color: #f39c12;
 }
 
-.crm-container ul li button:first-child:hover {
+.customer-item button:first-child:hover {
     background-color: #e67e22;
-}
-
-.drop-down {
-    margin-right: 10px;
-    background-color: #F5F5F5;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    width: 20rem;
 }
 
 /* Media queries for responsive design */
@@ -125,11 +133,8 @@
         padding: 20px;
     }
 
-    .crm-container form, .crm-container ul {
+    .form-section, .customer-list-section {
         width: 100%; 
-    }
-
-    .crm-container form button {
-        width: 100%; 
+        margin-bottom: 20px; /* Add margin for spacing */
     }
 }

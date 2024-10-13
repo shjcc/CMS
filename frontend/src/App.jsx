@@ -1,5 +1,5 @@
-import React, { useState } from 'react'; 
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import OrderManagement from './pages/OrderManagement';
 import InventoryManagement from './pages/InventoryManagement';
@@ -7,32 +7,31 @@ import ProductionManagement from './pages/ProductionManagement';
 import CRM from './pages/CRM';
 import Reports from './pages/Reports';
 import ForgotPassword from './pages/ForgotPassword';
-import "./Login.css"; 
+import "./Login.css";
 import "./App.css";
-import logo from './assets/council-logo.svg'; 
-
+import logo from './assets/council-logo.svg';
 
 function Login({ onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onLogin();  
-        navigate('/'); 
+        onLogin();
+        navigate('/');
     };
 
     return (
         <div className="title-container">
             {/* left side for logo and title */}
             <div className="title-content">
-            <img 
-            id="councilLogo"
-            className="image"
-            src={logo}  
-            alt="Council Logo"
-            />
+                <img
+                    id="councilLogo"
+                    className="image"
+                    src={logo}
+                    alt="Council Logo"
+                />
 
                 {/* title */}
                 <h2>Catering Management System</h2>
@@ -107,7 +106,17 @@ function App() {
                             <li><Link to="/crm">CRM</Link></li>
                             <li><Link to="/reports">Reports</Link></li>
                         </ul>
+                        <button
+                            onClick={() => {
+                                setIsLoggedIn(false); // Log out
+                                navigate('/login'); // Redirect to login page
+                            }}
+                            className="logout-button"
+                            aria-label="Logout"
+                        >
+                        </button>
                     </nav>
+
                     <Routes>
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/orders" element={<OrderManagement />} />
