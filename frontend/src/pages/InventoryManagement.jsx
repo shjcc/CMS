@@ -1,12 +1,35 @@
-// src/components/InventoryManagement.jsx
 import '../styles/Inventory.css';
 import React, { useEffect, useState } from 'react';
-import {
-  fetchIngredients,
-  addIngredient,
-  updateIngredient,
-  deleteIngredient
-} from '../components/Inventory';
+
+// Sample data to simulate the backend response
+let sampleIngredients = [
+  { id: 1, name: 'Milk', quantity: 5, expiry: '2024-10-14' },
+  { id: 2, name: 'Cheese', quantity: 3, expiry: '2024-10-18' },
+  { id: 3, name: 'Eggs', quantity: 12, expiry: '2024-10-20' },
+];
+
+// Mocked functions to simulate API calls
+const fetchIngredients = async () => {
+  return sampleIngredients; // Return the sample data as a mock response
+};
+
+const addIngredient = async (ingredient) => {
+  const newId = sampleIngredients.length + 1;
+  const newIngredient = { ...ingredient, id: newId };
+  sampleIngredients.push(newIngredient); // Add to sample data
+  return newIngredient;
+};
+
+const updateIngredient = async (id, updatedIngredient) => {
+  sampleIngredients = sampleIngredients.map((ingredient) =>
+    ingredient.id === id ? { ...updatedIngredient, id } : ingredient
+  );
+  return updatedIngredient;
+};
+
+const deleteIngredient = async (id) => {
+  sampleIngredients = sampleIngredients.filter((ingredient) => ingredient.id !== id);
+};
 
 const InventoryManagement = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -79,7 +102,7 @@ const InventoryManagement = () => {
     const upcomingAlerts = [];
     const expired = [];
 
-    ingredients.forEach(item => {
+    ingredients.forEach((item) => {
       const expiryDate = new Date(item.expiry);
       const timeDiff = expiryDate - today;
       const daysLeft = timeDiff / (1000 * 3600 * 24);
@@ -107,7 +130,7 @@ const InventoryManagement = () => {
   return (
     <div className="inventory-management">
       <h1> Inventory Management </h1>
-      
+
       <div className="container">
         <div className="add-ingredient">
           <h2>Add Ingredient</h2>
@@ -181,13 +204,22 @@ const InventoryManagement = () => {
         </thead>
         <tbody>
           {ingredients.map((item, index) => (
-            <tr key={index} className={new Date(item.expiry) - new Date() <= 3 * 24 * 3600 * 1000 ? 'expiring-soon' : ''}>
+            <tr
+              key={index}
+              className={
+                new Date(item.expiry) - new Date() <= 3 * 24 * 3600 * 1000
+                  ? 'expiring-soon'
+                  : ''
+              }
+            >
               <td>{item.name}</td>
               <td>{item.quantity}</td>
               <td>{formatDate(item.expiry)}</td>
               <td>
                 <button onClick={() => handleEditIngredient(item)}>Edit</button>
-                <button onClick={() => handleDeleteIngredient(item.id)}>Delete</button>
+                <button onClick={() => handleDeleteIngredient(item.id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
