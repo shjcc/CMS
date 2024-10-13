@@ -4,7 +4,7 @@
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
     padding: 20px;
-    background-color: #F8F8F8; /* Off-white background */
+    background-color: #F8F8F8; 
     font-family: Arial, sans-serif;
     height: 85vh;
     box-sizing: border-box;

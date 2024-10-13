@@ -9,6 +9,7 @@ body {
 
 
 nav {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-color: #CFD2B2; /* Soft greenish background */
   padding: 15px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
@@ -36,6 +37,8 @@ nav ul li a {
   padding: 10px 20px;
   border-radius: 5px;
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+  font-size:  1.1rem;
+
 }
 
 nav ul li a:hover {
