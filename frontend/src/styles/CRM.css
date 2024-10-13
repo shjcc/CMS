@@ -1,7 +1,6 @@
 /* CRM Main Container */
-
 .crm-container {
-    display: flex; /* Flexbox for side-by-side layout */
+    display: flex; 
     justify-content: space-between;
     align-items: flex-start;
     padding: 40px 20px;
@@ -16,7 +15,7 @@
 
 /* Form container */
 .crm-container form {
-    flex: 1; /* Form takes up half of the width */
+    flex: 1; 
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -53,7 +52,7 @@
 
 /* Customer List Container */
 .crm-container ul {
-    flex: 1; /* List takes up the other half of the width */
+    flex: 1; 
     list-style-type: none;
     padding: 0;
 }
@@ -109,18 +108,28 @@
     background-color: #e67e22;
 }
 
+.drop-down {
+    margin-right: 10px;
+    background-color: #F5F5F5;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    width: 20rem;
+}
+
 /* Media queries for responsive design */
 @media (max-width: 768px) {
     .crm-container {
-        flex-direction: column; /* Stack form and list vertically */
+        flex-direction: column; 
         padding: 20px;
     }
 
     .crm-container form, .crm-container ul {
-        width: 100%; /* Make form and list full width on smaller screens */
+        width: 100%; 
     }
 
     .crm-container form button {
-        width: 100%; /* Ensure buttons take full width */
+        width: 100%; 
     }
 }

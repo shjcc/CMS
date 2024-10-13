@@ -54,3 +54,11 @@ CREATE TABLE IF NOT EXISTS wasted_items (
   wasted_on DATE,
   FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
 );
+
+CREATE TABLE IF NOT EXISTS customers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100),
+  contact VARCHAR(100),
+  orderHistory TEXT,
+  preferences VARCHAR(255) 
+);

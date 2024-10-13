@@ -2,20 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const { getOrders, createOrder, updateOrder, deleteOrder } = require('./controllers/orderController');
 const { getInventory, createInventoryItem, updateInventoryItem, deleteInventoryItem } = require('./controllers/inventoryController');
-
-// const { Client } = require('square');
+const { getCustomers, createCustomer, updateCustomer, deleteCustomer } = require('./controllers/crmController'); // Add this line
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
-
-// Initialise Square client
-// const squareClient = new Client({
-//   accessToken: 'EAAAl9FmrlJ5J4vILUWfhnA0lY_H8-1QHgbOdv3Oi09WZLJRMm878mVFtwHoGClw',
-//   environment: 'sandbox',
-// });
 
 // Order Routes
 app.get('/api/orders', getOrders);
@@ -28,6 +21,31 @@ app.get('/api/inventory', getInventory); // Fetch inventory
 app.post('/api/inventory', createInventoryItem); // Create inventory item
 app.put('/api/inventory/:id', updateInventoryItem); // Update inventory item
 app.delete('/api/inventory/:id', deleteInventoryItem); // Delete inventory item
+
+// CRM Routes
+app.get('/api/customers', getCustomers); // Fetch all customers
+app.post('/api/customers', createCustomer); // Create a new customer
+app.put('/api/customers/:id', updateCustomer); // Update customer details
+app.delete('/api/customers/:id', deleteCustomer); // Delete a customer
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+
+
+// Initialise Square client
+// const squareClient = new Client({
+//   accessToken: 'EAAAl9FmrlJ5J4vILUWfhnA0lY_H8-1QHgbOdv3Oi09WZLJRMm878mVFtwHoGClw',
+//   environment: 'sandbox',
+// });
+
+// Initialise Square client
+// const squareClient = new Client({
+//   accessToken: 'EAAAl9FmrlJ5J4vILUWfhnA0lY_H8-1QHgbOdv3Oi09WZLJRMm878mVFtwHoGClw',
+//   environment: 'sandbox',
+// });
+
 
 // Square Invoice Route
 // app.post('/create-invoice', async (req, res) => {
@@ -62,7 +80,3 @@ app.delete('/api/inventory/:id', deleteInventoryItem); // Delete inventory item
 //     res.status(500).json({ error: error.message });
 //   }
 // });
-
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});

@@ -9,7 +9,7 @@ navigate to where you want to store this file so: " cd desktop/test " (make sure
 
 enter: " git clone https://github.com/shjcc/CMS " (without the quotation marks)
 
-populating the databse with: (assuming cd = CMS)" mysql -u root -p catering_system < database/database.sql "
+populating the databse with: (assuming cd = CMS)" mysql -u root -p catering_system < database/database.sql " (password= MeowManagement123) 
 
 navigate inside the folder so: " cd CMS/frontend "
 
